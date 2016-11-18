@@ -31,9 +31,16 @@ namespace WebApplication1
         {
             // Add framework services.
             services.AddMvc();
-
+     
             var containerBuilder = new ContainerBuilder();
-            return new AutofacServiceProvider(containerBuilder.Build());
+            containerBuilder.Populate(services);
+            var container = containerBuilder.Build();
+            container.Dispose();
+
+
+            var containerBuilder2 = new ContainerBuilder();
+            containerBuilder2.Populate(services);
+            return new AutofacServiceProvider(containerBuilder2.Build());
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
